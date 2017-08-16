@@ -1,2 +1,2 @@
 # video-share
-An online video watching and sharing application front-end application based on Angular 4.
+An online video watching and sharing application (front-end) based on Angular 4. For backend, see `tahsinozden/simple-video-share-app`
