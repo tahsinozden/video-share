@@ -1,0 +1,14 @@
+<div class="container">
+    <form action="/uploader" enctype="multipart/form-data" method="post">
+        <div class="row">
+            <h2>Please choose a file to upload!</h2>
+            <input type="file" name="file" size="40" accept="video/mp4" (change)="setVideoFile(files)" #files class="btn primary">
+            <input type="submit" (click)="uploadVideo()" value="Send" [disabled]="disableSubmit" class="btn primary">
+            <div>
+                <p *ngIf="uploadStatus.success == 1" class="alert alert-success">Video Uploaded!</p>
+                <p *ngIf="uploadStatus.fail == 1" class="alert alert-danger">Video Upload Failed!</p>
+                <p *ngIf="uploadStatus.uploading == 1" class="alert alert-info">Uploading...</p>
+            </div>
+        </div>
+    </form>
+</div>

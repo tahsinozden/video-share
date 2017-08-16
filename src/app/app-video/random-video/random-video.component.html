@@ -1,0 +1,12 @@
+<div>
+    <div class="row">
+        <video id="randVideoElm" controls style="min-height: 360px; min-width: 640px" #videoplayer>
+            <source *ngIf="randomVideo"  id="randVideoSrc" [src]="randomVideo.url" type="video/mp4">
+        </video>
+    </div>
+    <hr>
+    <div class="row">
+        <input type="button" (click)="loadRandVideo(videoplayer)" value="Load Random Video" class="btn primary" />
+        <a *ngIf="randomVideo" [href]="randomVideo.url" download="" class="btn primary">Download</a>
+    </div>
+</div>
