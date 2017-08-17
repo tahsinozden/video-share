@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { VideoEntity } from '../entity/video.entity'
 import { VideoService } from '../video.service'
+import { VideoModel } from './../video.model';
 
 @Component({
   selector: 'recent-videos-bar',
@@ -10,8 +10,8 @@ import { VideoService } from '../video.service'
 })
 export class RecentVideosBarComponent implements OnInit {
 
-  @Output("videoClicked") videoClicked = new EventEmitter<VideoEntity>();
-  recentVideosObjectList: VideoEntity[] = [];
+  @Output("videoClicked") videoClicked = new EventEmitter<VideoModel>();
+  recentVideosObjectList: VideoModel[] = [];
 
   constructor(private videoService: VideoService) {
     // subsribe to the randomly loaded videos
@@ -21,7 +21,7 @@ export class RecentVideosBarComponent implements OnInit {
     });
    }
 
-  selectVideo(video: VideoEntity) {
+  selectVideo(video: VideoModel) {
     this.videoClicked.emit(video);
     this.videoService.videoOnRecentBarClicked.emit(video);
   }

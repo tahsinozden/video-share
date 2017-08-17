@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { VideoEntity } from './entity/video.entity'
 import { VideoService } from './video.service'
+import { VideoModel } from './video.model';
 
 @Component({
   selector: 'app-video',
@@ -9,7 +9,7 @@ import { VideoService } from './video.service'
   providers: [VideoService]
 })
 export class AppVideoComponent implements OnInit {
-  clickedVideo: VideoEntity;
+  clickedVideo: VideoModel;
   hideNoVideoInfo = false;
 
   constructor(private videoService: VideoService) { 
@@ -18,7 +18,7 @@ export class AppVideoComponent implements OnInit {
     });         
   }
 
-  onRecentVideoClicked(video: VideoEntity) {
+  onRecentVideoClicked(video: VideoModel) {
     this.clickedVideo = video;
     this.hideNoVideoInfo = true;
   }
