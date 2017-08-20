@@ -1,7 +1,9 @@
+import { Observable } from 'rxjs';
+import { VideoService } from './../video.service';
+import { VideoTagModel } from './../video-tag.model';
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ViewChild } from '@angular/core';
-import { VideoService } from '../video.service'
 import { VideoModel } from './../video.model';
 
 @Component({
@@ -15,6 +17,7 @@ export class RandomVideoComponent implements OnInit {
   @ViewChild("videoplayer") videoplayer;
 
   randomVideo: VideoModel;
+  currentVideoTags: Observable<VideoTagModel[]>;
 
   constructor(private http: HttpClient,
               private videoService: VideoService) {
@@ -30,13 +33,32 @@ export class RandomVideoComponent implements OnInit {
       this.videoService.newVideoAdded.emit(this.randomVideo);          
     }
     
-    this.videoService.loadRandomVideo()
-      .subscribe((data: VideoModel) => {
-        console.log(data);
-        data["url"] = this.videoService.BACKEND_URL + data["url"];
-        this.randomVideo = data;
-        this.videoService.loadAndPlayVideo(video);
-    });
+    // this.videoService.loadRandomVideo()
+    //   .subscribe((data: VideoModel) => {
+    //     console.log(data);
+    //     data["url"] = this.videoService.BACKEND_URL + data["url"];
+    //     this.randomVideo = data;
+    //     this.videoService.loadAndPlayVideo(video);
+    // });
+
+    this.videoService.loadRandomVideoObject()
+      .subscribe(
+        serverVideo => {
+          this.randomVideo = new VideoModel(serverVideo.videoId, 
+                                            this.videoService.BACKEND_URL + serverVideo.videoFilePath, 
+                                            serverVideo.videoTagIds.split(","));
+          console.log(this.randomVideo);            
+          // this.videoService.getVideoTagsById(this.randomVideo.videoTagIds)
+          //   .subscribe((data: VideoTagModel[]) => {
+          //     console.log(data);
+          //   });                
+          this.currentVideoTags = this.videoService.getVideoTagsById(this.randomVideo.videoTagIds);                
+          this.videoService.loadAndPlayVideo(video);
+        },
+        error => {
+          console.log(error);
+        }
+    )
   }
 
   ngOnInit() {

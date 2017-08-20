@@ -4,6 +4,7 @@ import 'rxjs/Rx';
 import { VideoModel } from './video.model'
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { ServerVideoModel } from "./server-video.model";
 
 @Injectable()
 export class VideoService {
@@ -21,6 +22,10 @@ export class VideoService {
         return this.httpClient.get(this.BACKEND_URL + '/randomvideo');
     }
     
+    loadRandomVideoObject() {
+      return this.httpClient.get<ServerVideoModel>(this.BACKEND_URL + '/api/v2/randomvideo');
+    }
+
     loadAndPlayVideo(videoElement: HTMLVideoElement) {
         if (videoElement == null) {
           return;
@@ -61,5 +66,14 @@ export class VideoService {
                 })
                 .join(",");
             });
+      }
+
+      getVideoTagsById(ids: string[]) {
+          let options = new RequestOptions({ params: {'ids' : ids}});
+          return this.http
+            .get(this.BACKEND_URL + "/data/videotags", options)
+            .map((response) => {
+              return response.json();
+            })
       }
 }
