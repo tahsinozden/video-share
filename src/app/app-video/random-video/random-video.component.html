@@ -4,6 +4,10 @@
             <source *ngIf="randomVideo"  id="randVideoSrc" [src]="randomVideo.url" type="video/mp4">
         </video>
     </div>
+    <div class="row" *ngIf="randomVideo">
+        <p>Video Tags: </p>
+        <span class="badge" *ngFor="let tag of (currentVideoTags | async)">{{ tag.tagName }}</span>
+    </div>
     <hr>
     <div class="row">
         <input type="button" (click)="loadRandVideo(videoplayer)" value="Load Random Video" class="btn primary" />
