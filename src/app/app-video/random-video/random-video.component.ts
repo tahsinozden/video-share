@@ -24,6 +24,7 @@ export class RandomVideoComponent implements OnInit {
 
     this.videoService.videoOnRecentBarClicked.subscribe(video => {
       this.randomVideo = video;
+      this.currentVideoTags = this.videoService.getVideoTagsById(this.randomVideo.videoTagIds);
       this.videoService.loadAndPlayVideo(this.videoplayer.nativeElement);
     });                
   }
