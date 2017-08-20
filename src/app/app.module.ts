@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { HttpModule } from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
@@ -21,7 +22,8 @@ import { RecentVideosBarComponent } from './app-video/recent-videos-bar/recent-v
   imports: [
     BrowserModule,
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
