@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ViewChild } from '@angular/core';
-import { VideoEntity } from '../entity/video.entity'
 import { VideoService } from '../video.service'
+import { VideoModel } from './../video.model';
 
 @Component({
   selector: 'random-video',
@@ -11,10 +11,10 @@ import { VideoService } from '../video.service'
   providers: []
 })
 export class RandomVideoComponent implements OnInit {
-  @Input() recentVideoClicked: VideoEntity;
+  @Input() recentVideoClicked: VideoModel;
   @ViewChild("videoplayer") videoplayer;
 
-  randomVideo: VideoEntity;
+  randomVideo: VideoModel;
 
   constructor(private http: HttpClient,
               private videoService: VideoService) {
@@ -31,7 +31,7 @@ export class RandomVideoComponent implements OnInit {
     }
     
     this.videoService.loadRandomVideo()
-      .subscribe((data: VideoEntity) => {
+      .subscribe((data: VideoModel) => {
         console.log(data);
         data["url"] = this.videoService.BACKEND_URL + data["url"];
         this.randomVideo = data;

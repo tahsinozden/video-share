@@ -1,14 +1,14 @@
 import { Injectable, EventEmitter } from '@angular/core'
-import { VideoEntity } from './entity/video.entity'
+import { VideoModel } from './video.model'
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Http, Headers, RequestOptions } from '@angular/http';
 
 @Injectable()
 export class VideoService {
     BACKEND_URL = "http://localhost:8080";
-    newVideoAdded = new EventEmitter<VideoEntity>();
-    videoOnRecentBarClicked = new EventEmitter<VideoEntity>();
-    randomVideo: VideoEntity;
+    newVideoAdded = new EventEmitter<VideoModel>();
+    videoOnRecentBarClicked = new EventEmitter<VideoModel>();
+    randomVideo: VideoModel;
 
     constructor(private httpClient: HttpClient,
                 private http: Http) {

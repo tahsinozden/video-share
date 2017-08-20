@@ -1,3 +1,3 @@
-export class VideoEntity {
+export class VideoModel {
     constructor(public id: number, public url: string) { }
 }
