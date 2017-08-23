@@ -30,6 +30,8 @@ export class VideoUploaderComponent implements OnInit {
   setVideoFile(files: HTMLInputElement) {
     console.log(files.value);
     this.disableSubmit = false;
+    this.videoTagList = [];
+    this.selectedVideoTag = "";
   }
 
   uploadVideo(event: Event) {
