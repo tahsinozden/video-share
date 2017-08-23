@@ -32,7 +32,7 @@ export class VideoUploaderComponent implements OnInit {
     this.disableSubmit = false;
   }
 
-  uploadVideo() {
+  uploadVideo(event: Event) {
     // event.stopPropagation();
     event.preventDefault();
 
