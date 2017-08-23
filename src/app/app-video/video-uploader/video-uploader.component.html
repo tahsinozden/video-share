@@ -28,11 +28,11 @@
                     </div>
                 </div>
 
-                <input type="submit" (click)="uploadVideo()" value="Send" [disabled]="disableSubmit" class="btn primary">
+                <input type="submit" (click)="uploadVideo($event)" value="Send" [disabled]="disableSubmit" class="btn primary">
                 <div>
-                    <p *ngIf="uploadStatus.success == 1" class="alert alert-success">Video Uploaded!</p>
-                    <p *ngIf="uploadStatus.fail == 1" class="alert alert-danger">Video Upload Failed!</p>
-                    <p *ngIf="uploadStatus.uploading == 1" class="alert alert-info">Uploading...</p>
+                    <p *ngIf="isFileUploadSuccess()" class="alert alert-success">Video Uploaded!</p>
+                    <p *ngIf="isFileUploadFailed()" class="alert alert-danger">Video Upload Failed!</p>
+                    <p *ngIf="isFileUploading()" class="alert alert-info">Uploading...</p>
                 </div>
             </div>
             <div class="col-md-6"></div>

@@ -3,6 +3,8 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import {Observable} from 'rxjs';
 import { VideoService } from '../video.service'
 import { VideoTagModel } from './../video-tag.model';
+import { HttpEvent } from "@angular/common/http";
+import { HttpEventType } from "@angular/common/http";
 
 @Component({
   selector: 'video-uploader',
@@ -17,12 +19,7 @@ export class VideoUploaderComponent implements OnInit {
   availableVideoTags: Observable<VideoTagModel[]> = this.videoService.getAvailableVideoTags();
   selectedVideoTag: string;
   videoTagList: string[] = [];
-
-  uploadStatus = {
-    success: 0,
-    fail: 0,
-    uploading: 0 
-  }
+  uploadStatusCode: UploadStatus = UploadStatus.INITIAL;
 
   constructor(private http: Http,
             private videoService: VideoService) {}
@@ -30,30 +27,34 @@ export class VideoUploaderComponent implements OnInit {
   setVideoFile(files: HTMLInputElement) {
     console.log(files.value);
     this.disableSubmit = false;
+    this.videoTagList = [];
+    this.selectedVideoTag = "";
+    this.uploadStatusCode = UploadStatus.INITIAL;
   }
 
-  uploadVideo() {
-    // event.stopPropagation();
+  uploadVideo(event: Event) {
     event.preventDefault();
 
     const files = this.fileInput.nativeElement.files;
-    this.uploadStatus.uploading = 1;
 
     this.videoService.uploadVideo(files, this.videoTagList)
-      
-      .subscribe(
-        body => {
-          console.log(body['filename']);
-          this.uploadStatus.success = 1;
-          this.uploadStatus.uploading = 0;
+        .subscribe(
+          (event: HttpEvent<any>) => {
+                switch (event.type) {
+                  case HttpEventType.Sent:
+                    console.log('Request sent!');
+                    this.uploadStatusCode = UploadStatus.UPLOADING;
+                    break;
+
+                  case HttpEventType.Response:
+                    console.log('Done!', event.body);
+                    this.uploadStatusCode = UploadStatus.SUCCESS;
+                }
         },
         error => {
-          console.log(error);
-          this.uploadStatus.success = 0;
-          this.uploadStatus.uploading = 0;
-          this.uploadStatus.fail = 1;
+          this.uploadStatusCode = UploadStatus.FAILED;
         }
-    )
+      )
   }
 
   onSelectChanged(event: Event) {
@@ -75,7 +76,26 @@ export class VideoUploaderComponent implements OnInit {
     }
   }
 
+  private isFileUploading() {
+    return this.uploadStatusCode === UploadStatus.UPLOADING;
+  }
+    
+  private isFileUploadSuccess() {
+    return this.uploadStatusCode === UploadStatus.SUCCESS;      
+  }
+    
+  private isFileUploadFailed() {
+    return this.uploadStatusCode === UploadStatus.FAILED;
+  }
+    
   ngOnInit() {
   }
 
+}
+
+enum UploadStatus {
+  INITIAL,
+  SUCCESS,
+  FAILED,
+  UPLOADING
 }

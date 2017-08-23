@@ -5,6 +5,7 @@ import { VideoModel } from './video.model'
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { ServerVideoModel } from "./server-video.model";
+import { HttpRequest } from "@angular/common/http";
 
 @Injectable()
 export class VideoService {
@@ -39,16 +40,23 @@ export class VideoService {
         const files = fileInput;
         const formData = new FormData();
         formData.append('file', files[0]);
-    
-        // TODO: handle it with httpClient
-        // const requestHeaders = new HttpHeaders().set('Content-Type', 'multipart/form-data; boundary=----WebKitFormBoundarysDyUAE7vSG0Eskwt')
-        // console.log(requestHeaders);
-
+        
         const url = this.BACKEND_URL + "/api/v2/uploader";
-        const headers = new Headers({headers: {'Content-Type': 'multipart/form-data'}});
-        let options = new RequestOptions({ headers: headers, params: {'videoTagNames' : videoTags}});
+        // no need to set headers, let the browser set it for you :)
+        // const requestHeaders = new HttpHeaders().set('Content-Type', 'multipart/form-data');
+        const requestParams = new HttpParams().append('videoTagNames', videoTags.toString());
 
-        return this.http.post(url, formData, options);
+        // return this.httpClient.post(url, formData, {
+        //   params: requestParams,
+        //   reportProgress: true
+        // });
+
+        // in order for reportProgress to work, customized post request should be created!
+        const req = new HttpRequest('POST', url, formData, {
+            params: requestParams,
+            reportProgress: true
+        })
+        return this.httpClient.request(req);
       }
 
       getAvailableVideoTags() {
