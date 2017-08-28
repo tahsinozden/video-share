@@ -13,4 +13,7 @@
         <input type="button" (click)="loadRandVideo(videoplayer)" value="Load Random Video" class="btn primary" />
         <a *ngIf="randomVideo" [href]="randomVideo.url" download="" class="btn primary">Download</a>
     </div>
+    <div class="row">
+        <video-tag-selector></video-tag-selector>
+    </div>
 </div>

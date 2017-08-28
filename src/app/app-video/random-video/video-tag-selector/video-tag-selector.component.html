@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-md-5">
+        <label for="typeahead-video-tag">Search for a video tag for random video:</label>
+    </div>
+    <div class="col-md-7">
+        <input id="typeahead-video-tag" type="text" [(ngModel)]="model" class="form-control" (selectItem)="onTagSelected($event)" [ngbTypeahead]="search"/>
+    </div>
+</div>
+<div class="row">
+    <span class="badge" *ngFor="let sTagName of selectedVideoTags" (click)="onTagRemove(sTagName)">{{ sTagName }}</span>
+</div>
