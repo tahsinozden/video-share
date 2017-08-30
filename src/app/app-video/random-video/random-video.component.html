@@ -1,16 +1,30 @@
 <div>
     <div class="row">
-        <video id="randVideoElm" controls style="min-height: 360px; min-width: 640px" #videoplayer>
-            <source *ngIf="randomVideo"  id="randVideoSrc" [src]="randomVideo.url" type="video/mp4">
-        </video>
+        <div class="col-md-12">
+            <video id="randVideoElm"
+                   controls
+                   style="min-height: 360px; min-width: 640px"
+                   data-toggle="tooltip" title="Click 'Load Random Video' button to load video!"
+                   #videoplayer>
+                <source *ngIf="randomVideo"  id="randVideoSrc" [src]="randomVideo.url" type="video/mp4">
+            </video>
+            <p *ngIf="videoErrorMessage != '' ">{{ videoErrorMessage }}</p>
+        </div>
     </div>
+
     <div class="row" *ngIf="randomVideo">
         <p>Video Tags: </p>
         <span class="badge" *ngFor="let tag of (currentVideoTags | async)">{{ tag.tagName }}</span>
     </div>
     <hr>
+
     <div class="row">
-        <input type="button" (click)="loadRandVideo(videoplayer)" value="Load Random Video" class="btn primary" />
+        <button class="btn btn-primary" (click)="loadRandVideo(videoplayer)">Load Random Video</button>
         <a *ngIf="randomVideo" [href]="randomVideo.url" download="" class="btn primary">Download</a>
+    </div>
+    <br>
+
+    <div class="row">
+        <video-tag-selector></video-tag-selector>
     </div>
 </div>

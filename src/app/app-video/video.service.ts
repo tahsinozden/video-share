@@ -1,17 +1,18 @@
-import { VideoTagModel } from './video-tag.model';
-import { Injectable, EventEmitter } from '@angular/core'
+import {VideoTagModel} from './video-tag.model';
+import {Injectable, EventEmitter} from '@angular/core'
 import 'rxjs/Rx';
-import { VideoModel } from './video.model'
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Http, Headers, RequestOptions } from '@angular/http';
-import { ServerVideoModel } from "./server-video.model";
-import { HttpRequest } from "@angular/common/http";
+import {VideoModel} from './video.model'
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Http, Headers, RequestOptions} from '@angular/http';
+import {ServerVideoModel} from "./server-video.model";
+import {HttpRequest} from "@angular/common/http";
 
 @Injectable()
 export class VideoService {
     BACKEND_URL = "http://localhost:8080";
     newVideoAdded = new EventEmitter<VideoModel>();
     videoOnRecentBarClicked = new EventEmitter<VideoModel>();
+    videoTagSelectedForRandomVideo = new EventEmitter<string[]>();
     randomVideo: VideoModel;
 
     constructor(private httpClient: HttpClient,
@@ -22,25 +23,32 @@ export class VideoService {
     loadRandomVideo() {
         return this.httpClient.get(this.BACKEND_URL + '/randomvideo');
     }
-    
+
     loadRandomVideoObject() {
-      return this.httpClient.get<ServerVideoModel>(this.BACKEND_URL + '/api/v2/randomvideo');
+        return this.httpClient.get<ServerVideoModel>(this.BACKEND_URL + '/api/v2/randomvideo');
+    }
+
+    loadRandomVideoObjectWithTags(tagIds: string[]) {
+        return tagIds.length == 0 ? this.loadRandomVideoObject()
+            : this.httpClient.get<ServerVideoModel>(this.BACKEND_URL + '/api/v2/randomvideo', {
+                params: new HttpParams().append("tagIds", tagIds.toString())
+            });
     }
 
     loadAndPlayVideo(videoElement: HTMLVideoElement) {
         if (videoElement == null) {
-          return;
+            return;
         }
 
         videoElement.load();
         videoElement.play();
-      }
-    
-      uploadVideo(fileInput: HTMLInputElement, videoTags?: string[]) {    
+    }
+
+    uploadVideo(fileInput: HTMLInputElement, videoTags?: string[]) {
         const files = fileInput;
         const formData = new FormData();
         formData.append('file', files[0]);
-        
+
         const url = this.BACKEND_URL + "/api/v2/uploader";
         // no need to set headers, let the browser set it for you :)
         // const requestHeaders = new HttpHeaders().set('Content-Type', 'multipart/form-data');
@@ -57,31 +65,31 @@ export class VideoService {
             reportProgress: true
         })
         return this.httpClient.request(req);
-      }
+    }
 
-      getAvailableVideoTags() {
+    getAvailableVideoTags() {
         return this.httpClient.get(this.BACKEND_URL + "/data/videotags")
-          .map((response: VideoTagModel[]) => {
-            return response;
-          })
-      }
+            .map((response: VideoTagModel[]) => {
+                return response;
+            })
+    }
 
-      getAvailableVideoTagsString() {
+    getAvailableVideoTagsString() {
         return this.getAvailableVideoTags()
             .map((response: VideoTagModel[]) => {
-                return response.map(function(item, index) {
-                  return item.tagName;
+                return response.map(function (item, index) {
+                    return item.tagName;
                 })
-                .join(",");
+                    .join(",");
             });
-      }
+    }
 
-      getVideoTagsById(ids: string[]) {
-          let options = new RequestOptions({ params: {'ids' : ids}});
-          return this.http
+    getVideoTagsById(ids: string[]) {
+        let options = new RequestOptions({params: {'ids': ids}});
+        return this.http
             .get(this.BACKEND_URL + "/data/videotags", options)
             .map((response) => {
-              return response.json();
+                return response.json();
             })
-      }
+    }
 }

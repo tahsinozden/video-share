@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <label for="video-tag-complete">Load a random video by tag.</label>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div>
+                    <input id="video-tag-complete"
+                           type="text"
+                           placeholder="   type a video tag"
+                           [(ngModel)]="currentValue.tagName"
+                           (ngModelChange)="onValueChanged($event)"
+                           (click)="onInputClicked($event)">
+                </div>
+            </div>
+
+            <div class="row">
+                <div *ngIf="filteredVideoTags.length > 0; else emptyResult">
+                    <span class="autocomplete-span"
+                          *ngFor="let tag of filteredVideoTags"
+                          (click)="onTagSelected(tag)">{{ tag.tagName }}
+                    </span>
+                </div>
+
+                <ng-template #emptyResult>
+                    <div>
+                        <!-- empty label as an offset, to keep the rest of the elements on the same position-->
+                        <label></label>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <p *ngIf="selectedVideoTags.length">Filtering Video Tags:</p>
+        <span class="badge"
+              *ngFor="let tag of selectedVideoTags"
+              (click)="onTagRemove(tag)"
+              data-toggle="tooltip" title="Click to remove!">{{ tag.tagName }}</span>
+    </div>
+</div>
+
