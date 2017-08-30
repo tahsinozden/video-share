@@ -3,6 +3,7 @@
         <video id="randVideoElm" controls style="min-height: 360px; min-width: 640px" #videoplayer>
             <source *ngIf="randomVideo"  id="randVideoSrc" [src]="randomVideo.url" type="video/mp4">
         </video>
+        <p *ngIf="videoErrorMessage != '' ">{{ videoErrorMessage }}</p>
     </div>
     <div class="row" *ngIf="randomVideo">
         <p>Video Tags: </p>

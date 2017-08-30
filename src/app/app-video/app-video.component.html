@@ -1,32 +1,36 @@
-<div class="row">
-    <div class="col-md-4"></div>
+<div class="container">
+    <div class="row">
+        <div class="container">
+            <div class="col-md-4"></div>
 
-    <div class="col-md-4">
-        <div class="row">
-            <div class="col-md-12">
-                <random-video [recentVideoClicked]="clickedVideo"></random-video>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <random-video [recentVideoClicked]="clickedVideo"></random-video>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <video-uploader></video-uploader>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <video-uploader></video-uploader>
-            </div>
+
+            <div class="col-md-4"></div>
         </div>
     </div>
 
-    <div class="col-md-4"></div>
-</div>
 
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <h3>Recent Videos</h3>
+            <p *ngIf="!hideNoVideoInfo">No recent videos to show.</p>
+        </div>
+        <div class="col-md-4"></div>
 
-<div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <h3>Recent Videos</h3>
-        <p *ngIf="!hideNoVideoInfo">No recent videos to show.</p>
-    </div>
-    <div class="col-md-4"></div>
-
-    <div class="col-md-12">
-        <recent-videos-bar (videoClicked)="onRecentVideoClicked($event)"></recent-videos-bar>
+        <div class="col-md-12">
+            <recent-videos-bar (videoClicked)="onRecentVideoClicked($event)"></recent-videos-bar>
+        </div>
     </div>
 </div>

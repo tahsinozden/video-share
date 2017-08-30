@@ -19,6 +19,7 @@ export class RandomVideoComponent implements OnInit {
     randomVideo: VideoModel;
     currentVideoTags: Observable<VideoTagModel[]>;
     selectedVideoTagIds: string[] = [];
+    videoErrorMessage = "";
 
     constructor(private http: HttpClient,
                 private videoService: VideoService) {
@@ -35,25 +36,20 @@ export class RandomVideoComponent implements OnInit {
             this.videoService.newVideoAdded.emit(this.randomVideo);
         }
 
-        // this.videoService.loadRandomVideo()
-        //   .subscribe((data: VideoModel) => {
-        //     console.log(data);
-        //     data["url"] = this.videoService.BACKEND_URL + data["url"];
-        //     this.randomVideo = data;
-        //     this.videoService.loadAndPlayVideo(video);
-        // });
-
         this.videoService.loadRandomVideoObjectWithTags(this.selectedVideoTagIds)
             .subscribe(
                 serverVideo => {
+                    if (serverVideo.videoId == null) {
+                        this.randomVideo = null;
+                        this.videoErrorMessage = "No matching video found! Try removing some tags.";
+                        return;
+                    }
+                    this.videoErrorMessage = "";
                     this.randomVideo = new VideoModel(serverVideo.videoId,
                         this.videoService.BACKEND_URL + serverVideo.videoFilePath,
                         serverVideo.videoTagIds.split(","));
                     console.log(this.randomVideo);
-                    // this.videoService.getVideoTagsById(this.randomVideo.videoTagIds)
-                    //   .subscribe((data: VideoTagModel[]) => {
-                    //     console.log(data);
-                    //   });
+
                     this.currentVideoTags = this.videoService.getVideoTagsById(this.randomVideo.videoTagIds);
                     this.videoService.loadAndPlayVideo(video);
                 },

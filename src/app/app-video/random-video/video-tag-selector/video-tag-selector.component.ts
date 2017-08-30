@@ -12,38 +12,25 @@ import {VideoTagModel} from "../../video-tag.model";
     styleUrls: ['./video-tag-selector.component.css']
 })
 export class VideoTagSelectorComponent implements OnInit {
-    model: string = "";
     allVideoTags: VideoTagModel[] = [];
+    filteredVideoTags: VideoTagModel[] = [];
     selectedVideoTags: VideoTagModel[] = [];
-    formatter = (result: VideoTagModel) => result.tagName;
     // ViewChild must be used to reach the html reference
     @ViewChild('searchElm') searchElm: ElementRef;
+    currentValue: VideoTagModel = new VideoTagModel(-1, "");
 
     constructor(private videoService: VideoService) {
     }
 
-    search = (text$: Observable<string>) =>
-        text$
-            .debounceTime(200)
-            .distinctUntilChanged()
-            .map(term => term.length < 2 ? []
-                : this.allVideoTags.filter(v => v.tagName.toLowerCase().indexOf(term.toLowerCase()) > -1) )
-                    // .map(item => item.tagName)
-                    // .slice(0, 10));
-
-    onTagSelected(event) {
-        if (event.item != null) {
-            this.selectedVideoTags.push(event.item);
+    onTagSelected(tag: VideoTagModel) {
+        if (tag != null) {
+            this.selectedVideoTags.push(tag);
             this.videoService.videoTagSelectedForRandomVideo.emit(this.convertToIdList(this.selectedVideoTags));
-            console.log(event.item.tagName);
-            this.searchElm.nativeElement.value = "";
-            this.model = event.item.tagName;
         }
     }
 
     onTagRemove(tag: VideoTagModel) {
         const idx = this.selectedVideoTags.indexOf(tag);
-
         if (idx > -1) {
             this.selectedVideoTags.splice(idx, 1);
             this.videoService.videoTagSelectedForRandomVideo.emit(this.convertToIdList(this.selectedVideoTags));
@@ -55,13 +42,24 @@ export class VideoTagSelectorComponent implements OnInit {
         return videoTag.map(item => item.tagId.toString());
     }
 
-    private getTagIdFRomTagName(tagName: string) {
-        if (this.selectedVideoTags.length) {
-            return this.selectedVideoTags
-                .filter(item => item.tagName === tagName)
-                .map(item => item.tagId.toString());
+    onTagInputClicked(elm: HTMLInputElement) {
+        elm.value = "";
+    }
+
+    onValueChanged(elm: HTMLInputElement) {
+        this.handleAutoComplete();
+    }
+
+    private handleAutoComplete() {
+        if (this.currentValue != null && this.currentValue.tagName.length >= 2) {
+            let currentTagName = this.currentValue.tagName;
+            this.filteredVideoTags = this.allVideoTags
+                .filter(item => item.tagName.indexOf(currentTagName) > -1)
+                .slice(0, 3);
+
+        } else {
+            this.filteredVideoTags = [];
         }
-        return "";
     }
 
     ngOnInit() {
