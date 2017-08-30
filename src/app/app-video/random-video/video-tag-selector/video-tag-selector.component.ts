@@ -1,5 +1,4 @@
-import {Component, ElementRef, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -42,19 +41,19 @@ export class VideoTagSelectorComponent implements OnInit {
         return videoTag.map(item => item.tagId.toString());
     }
 
-    onTagInputClicked(elm: HTMLInputElement) {
-        elm.value = "";
-    }
-
     onValueChanged(elm: HTMLInputElement) {
         this.handleAutoComplete();
+    }
+
+    onInputClicked(elm: HTMLInputElement) {
+        this.loadAvailableTags();
     }
 
     private handleAutoComplete() {
         if (this.currentValue != null && this.currentValue.tagName.length >= 2) {
             let currentTagName = this.currentValue.tagName;
             this.filteredVideoTags = this.allVideoTags
-                .filter(item => item.tagName.indexOf(currentTagName) > -1)
+                .filter(item => item.tagName.toLowerCase().indexOf(currentTagName.toLowerCase()) > -1)
                 .slice(0, 3);
 
         } else {
@@ -62,12 +61,16 @@ export class VideoTagSelectorComponent implements OnInit {
         }
     }
 
-    ngOnInit() {
+    private loadAvailableTags() {
+        this.allVideoTags = [];
         this.videoService.getAvailableVideoTags().subscribe(data => {
             data.map(val => {
                 this.allVideoTags.push(val);
             })
         })
+    }
+
+    ngOnInit() {
     }
 
 }
