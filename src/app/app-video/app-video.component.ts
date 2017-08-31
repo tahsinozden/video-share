@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { VideoService } from './video.service'
-import { VideoModel } from './video.model';
+import {Component, OnInit} from '@angular/core';
+import {VideoService} from './video.service'
+import {VideoModel} from './video.model';
 
 @Component({
   selector: 'app-video',

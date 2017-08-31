@@ -1,9 +1,8 @@
 import {Observable} from 'rxjs';
 import {VideoService} from './../video.service';
 import {VideoTagModel} from './../video-tag.model';
-import {Component, OnInit, Input, ElementRef} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ViewChild} from '@angular/core';
 import {VideoModel} from './../video.model';
 
 @Component({
