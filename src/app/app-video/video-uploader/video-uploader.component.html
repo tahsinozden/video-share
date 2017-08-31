@@ -1,41 +1,45 @@
 <div class="container">
-    <form action="/uploader" enctype="multipart/form-data" method="post">
-        <div class="row">
-            <div class="col-md-6">
-                <h2>Please choose a file to upload!</h2>
-                <input type="file" name="file" size="40" accept="video/mp4" (change)="setVideoFile(files)" #files class="btn primary">
-                <div *ngIf="!disableSubmit">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <select name="availableTags" id="" (change)="onSelectChanged($event)" [(ngModel)]="selectedVideoTag">
-                                <!-- <option *ngFor="let tag of (availableVideoTags | async )" [ngValue]="tag">{{ tag.tagName }}</option> -->
-                                <option value="">Choose a tag</option>
-                                <option *ngFor="let tag of (availableVideoTags | async )">{{ tag.tagName }}</option>
-                            </select>
-                        </div>
-                        <div class="col-md-8">
-                            <span class="badge" *ngFor="let sTagName of videoTagList" (click)="onTagRemove(sTagName)">{{ sTagName }}</span>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-5">
-                            <input type="text" name="newTag" placeholder="Create a new Tag" [(ngModel)]="videoTags">
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-default" (click)="onTagAddClicked(videoTags)">Create a Tag</button>
-                        </div>
-                    </div>
-                </div>
-
-                <input type="submit" (click)="uploadVideo($event)" value="Send" [disabled]="disableSubmit" class="btn primary">
-                <div>
-                    <p *ngIf="isFileUploadSuccess()" class="alert alert-success">Video Uploaded!</p>
-                    <p *ngIf="isFileUploadFailed()" class="alert alert-danger">Video Upload Failed!</p>
-                    <p *ngIf="isFileUploading()" class="alert alert-info">Uploading...</p>
-                </div>
+  <form action="/uploader" enctype="multipart/form-data" method="post">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Please choose a file to upload!</h2>
+        <input type="file" name="file" size="40" accept="video/mp4" (change)="setVideoFile(files)" #files
+               class="btn primary">
+        <div *ngIf="!disableSubmit">
+          <div class="row">
+            <div class="col-md-4">
+              <select name="availableTags" id="" (change)="onSelectChanged($event)"
+                      [(ngModel)]="selectedVideoTag">
+                <!-- <option *ngFor="let tag of (availableVideoTags | async )" [ngValue]="tag">{{ tag.tagName }}</option> -->
+                <option value="">Choose a tag</option>
+                <option *ngFor="let tag of (availableVideoTags | async )">{{ tag.tagName }}</option>
+              </select>
             </div>
-            <div class="col-md-6"></div>
+            <div class="col-md-8">
+              <span class="badge" *ngFor="let sTagName of videoTagList"
+                    (click)="onTagRemove(sTagName)">{{ sTagName }}</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-5">
+              <input type="text" name="newTag" placeholder="Create a new Tag" [(ngModel)]="videoTags">
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-default" (click)="onTagAddClicked(videoTags)">Create a Tag</button>
+            </div>
+          </div>
         </div>
-    </form>
+
+        <input type="submit" (click)="uploadVideo($event)" value="Send" [disabled]="disableSubmit"
+               class="btn primary">
+        <div>
+          <p *ngIf="isFileUploadSuccess()" class="alert alert-success">Video Uploaded!</p>
+          <p *ngIf="isFileUploadFailed()" class="alert alert-danger">Video Upload Failed!</p>
+          <p *ngIf="isFileUploading()" class="alert alert-info">Uploading...</p>
+        </div>
+      </div>
+      <div class="col-md-6"></div>
+    </div>
+  </form>
 </div>
