@@ -1,11 +1,10 @@
 import {VideoTagModel} from './video-tag.model';
-import {Injectable, EventEmitter} from '@angular/core'
+import {EventEmitter, Injectable} from '@angular/core'
 import 'rxjs/Rx';
 import {VideoModel} from './video.model'
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Http, Headers, RequestOptions} from '@angular/http';
+import {HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
+import {Http, RequestOptions} from '@angular/http';
 import {ServerVideoModel} from "./server-video.model";
-import {HttpRequest} from "@angular/common/http";
 
 @Injectable()
 export class VideoService {

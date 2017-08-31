@@ -1,6 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { VideoService } from '../video.service'
-import { VideoModel } from './../video.model';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {VideoService} from '../video.service'
+import {VideoModel} from './../video.model';
 
 @Component({
   selector: 'recent-videos-bar',
