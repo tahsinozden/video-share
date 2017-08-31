@@ -1,11 +1,11 @@
 <div>
-    <div class="scrollmenu">
-        <div *ngFor="let videoObj of recentVideosObjectList">
-            <div>
-                <video (click)="selectVideo(videoObj)">
-                        <source src="{{ videoObj.url }}" type="video/mp4">
-                </video>
-            </div>
-        </div>
+  <div class="scrollmenu">
+    <div *ngFor="let videoObj of recentVideosObjectList">
+      <div>
+        <video (click)="selectVideo(videoObj)">
+          <source src="{{ videoObj.url }}" type="video/mp4">
+        </video>
+      </div>
     </div>
+  </div>
 </div>

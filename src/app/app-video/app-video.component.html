@@ -1,24 +1,24 @@
 <div class="container">
-    <div class="row">
-        <div class="container">
-            <div class="col-md-1"></div>
-            <hr>
-            <div class="col-md-10">
-                <div class="row">
-                    <random-video [recentVideoClicked]="clickedVideo"></random-video>
-                </div>
-                <div class="row">
-                    <video-uploader></video-uploader>
-                    <h3>Recent Videos</h3>
-                    <p *ngIf="!hideNoVideoInfo">No recent videos to show.</p>
-                </div>
-            </div>
-
-            <div class="col-md-1"></div>
+  <div class="row">
+    <div class="container">
+      <div class="col-md-1"></div>
+      <hr>
+      <div class="col-md-10">
+        <div class="row">
+          <random-video [recentVideoClicked]="clickedVideo"></random-video>
         </div>
+        <div class="row">
+          <video-uploader></video-uploader>
+          <h3>Recent Videos</h3>
+          <p *ngIf="!hideNoVideoInfo">No recent videos to show.</p>
+        </div>
+      </div>
+
+      <div class="col-md-1"></div>
     </div>
+  </div>
 </div>
 
 <div class="row">
-    <recent-videos-bar (videoClicked)="onRecentVideoClicked($event)"></recent-videos-bar>
+  <recent-videos-bar (videoClicked)="onRecentVideoClicked($event)"></recent-videos-bar>
 </div>

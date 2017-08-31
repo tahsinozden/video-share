@@ -14,23 +14,24 @@ import {RecentVideosBarComponent} from './app-video/recent-videos-bar/recent-vid
 import {VideoTagSelectorComponent} from './app-video/random-video/video-tag-selector/video-tag-selector.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AppVideoComponent,
-    VideoUploaderComponent,
-    RandomVideoComponent,
-    RecentVideosBarComponent,
-    VideoTagSelectorComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    HttpModule,
-    FormsModule,
-    // this is for @ng-bootstrap/ng-bootstrap
-    NgbModule.forRoot()
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        AppVideoComponent,
+        VideoUploaderComponent,
+        RandomVideoComponent,
+        RecentVideosBarComponent,
+        VideoTagSelectorComponent
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        HttpModule,
+        FormsModule,
+        // this is for @ng-bootstrap/ng-bootstrap
+        NgbModule.forRoot()
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
