@@ -6,25 +6,36 @@
                    style="min-height: 360px; min-width: 640px"
                    data-toggle="tooltip" title="Click 'Load Random Video' button to load video!"
                    #videoplayer>
-                <source *ngIf="randomVideo"  id="randVideoSrc" [src]="randomVideo.url" type="video/mp4">
+                <source *ngIf="randomVideo" id="randVideoSrc" [src]="randomVideo.url" type="video/mp4">
             </video>
             <p *ngIf="videoErrorMessage != '' ">{{ videoErrorMessage }}</p>
         </div>
     </div>
 
-    <div class="row" *ngIf="randomVideo">
-        <p>Video Tags: </p>
-        <span class="badge" *ngFor="let tag of (currentVideoTags | async)">{{ tag.tagName }}</span>
-    </div>
-    <hr>
+    <div>
+        <div class="col-sm-11 col-md-10 col-lg-8">
+            <div class="row" *ngIf="randomVideo">
+                <span>Video Tags: </span>
+                <span class="badge" *ngFor="let tag of (currentVideoTags | async)">{{ tag.tagName }}</span>
+            </div>
+            <hr>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-offset-0">
+                            <button class="btn btn-primary" (click)="loadRandVideo(videoplayer)">Load Random Video</button>
+                            <a *ngIf="randomVideo" [href]="randomVideo.url" download="" class="btn primary">Download</a>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row col-md-offset-1 col-xs-offset-0">
+                        <video-tag-selector></video-tag-selector>
+                    </div>
+                </div>
+            </div>
 
-    <div class="row">
-        <button class="btn btn-primary" (click)="loadRandVideo(videoplayer)">Load Random Video</button>
-        <a *ngIf="randomVideo" [href]="randomVideo.url" download="" class="btn primary">Download</a>
+        </div>
+        <div class="col-md-2 col-lg-4"></div>
     </div>
-    <br>
 
-    <div class="row">
-        <video-tag-selector></video-tag-selector>
-    </div>
 </div>
