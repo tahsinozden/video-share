@@ -1,14 +1,14 @@
-import { VideoSharePage } from './app.po';
+import {VideoSharePage} from './app.po';
 
 describe('video-share App', () => {
-  let page: VideoSharePage;
+    let page: VideoSharePage;
 
-  beforeEach(() => {
-    page = new VideoSharePage();
-  });
+    beforeEach(() => {
+        page = new VideoSharePage();
+    });
 
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
-  });
+    it('should display welcome message', () => {
+        page.navigateTo();
+        expect(page.getParagraphText()).toEqual('Welcome to app!');
+    });
 });
