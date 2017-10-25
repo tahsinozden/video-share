@@ -13,6 +13,19 @@
         <li><a href="/">Home</a></li>
         <li><a href="/about">About</a></li>
       </ul>
+      <!--<div *ngIf="( !isUserLogged | async ); else logoutBanner">-->
+      <div *ngIf="!userLogged; else logoutBanner">
+        <form class="navbar-search pull-right">
+          <input type="text" placeholder="Login" name="userName" [(ngModel)]="user.userName">
+          <input type="password" placeholder="Password" name="password" [(ngModel)]="user.password">
+          <button (click)="login()">Login</button>
+        </form>
+      </div>
+      <ng-template #logoutBanner>
+        <form class="navbar-search pull-right">
+          <button (click)="logout()">Logout</button>
+        </form>
+      </ng-template>
     </div>
   </div>
 </nav>

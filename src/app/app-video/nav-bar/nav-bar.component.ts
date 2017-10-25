@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {UserVideoService} from "../user.video.service";
+import {Observable} from "rxjs/Observable";
+import {UserModel} from "../model/user.model";
 
 @Component({
   selector: 'app-nav-bar',
@@ -6,10 +9,51 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
+    user: UserModel = new UserModel("", "");
+    isUserLogged: Observable<boolean> = this.userVideoService.isUserLogged();
+    userLogged = false;
 
-  constructor() { }
+    constructor(private userVideoService: UserVideoService) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        this.userVideoService.isUserLogged().subscribe((data: boolean) => {
+            this.userLogged = data;
+        })
+    }
 
+    login() {
+        console.log(this.user);
+        this.userVideoService.loginUser(this.user).subscribe(
+            (data: string) => {
+                    if (this.userVideoService.loginSuccess(data)) {
+                        let bean = {userName: this.user.userName, authToken: data};
+                        this.userVideoService.saveAuthBean(bean);
+                        this.userLogged = true;
+                    } else {
+                        this.userLogged = false;
+                    }
+                    console.log(data);
+                },
+            error => {
+                this.userLogged = false;
+                this.userVideoService.removeAuthBean();
+            }
+        );
+        this.resetForm();
+    }
+
+    logout() {
+        let bean = this.userVideoService.getAuthBean();
+        console.log(bean);
+        if (bean != null) {
+            this.userVideoService.logout(bean.userName).subscribe(data => {
+                this.userLogged = false;
+                this.userVideoService.removeAuthBean();
+            });
+        }
+    }
+
+    resetForm() {
+        this.user = new UserModel("", "");
+    }
 }
