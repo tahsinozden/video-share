@@ -21,14 +21,15 @@ export class NavBarComponent implements OnInit {
         })
     }
 
-    login() {
-        console.log(this.user);
-        this.userVideoService.loginUser(this.user).subscribe(
+    login(user: UserModel) {
+        console.log(user);
+        this.userVideoService.loginUser(user).subscribe(
             (data: string) => {
                     if (this.userVideoService.loginSuccess(data)) {
-                        let bean = {userName: this.user.userName, authToken: data};
+                        let bean = {userName: user.userName, authToken: data};
                         this.userVideoService.saveAuthBean(bean);
                         this.userLogged = true;
+                        this.userVideoService.userSessionStatusEvent.emit(true);
                     } else {
                         this.userLogged = false;
                     }
@@ -49,6 +50,7 @@ export class NavBarComponent implements OnInit {
             this.userVideoService.logout(bean.userName).subscribe(data => {
                 this.userLogged = false;
                 this.userVideoService.removeAuthBean();
+                this.userVideoService.userSessionStatusEvent.emit(false);
             });
         }
     }

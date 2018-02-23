@@ -1,14 +1,17 @@
-import {Injectable} from '@angular/core'
+import {EventEmitter, Injectable} from '@angular/core'
 import 'rxjs/Rx';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Http} from '@angular/http';
 import {UserModel} from "./model/user.model";
+import {VideoModel} from "./video.model";
 
 @Injectable()
 export class UserVideoService {
     BACKEND_URL = "http://localhost:8080";
     INVALID_TOKEN_VALUE = -1;
     AUTH_BEAN = 'AUTH_BEAN';
+    userVideoAdded = new EventEmitter<VideoModel>();
+    userSessionStatusEvent = new EventEmitter<boolean>();
 
     constructor(private httpClient: HttpClient,
                 private http: Http) {
@@ -30,7 +33,7 @@ export class UserVideoService {
     isUserLogged() {
         const url = this.BACKEND_URL + "/user/authenticate";
         let authBean = this.getAuthBean();
-        return this.httpClient.post(url, authBean);
+        return this.httpClient.post(url, {authBean: authBean});
     }
 
     getAuthBean() {
@@ -49,11 +52,12 @@ export class UserVideoService {
         return token !== this.INVALID_TOKEN_VALUE;
     }
 
-    saveVideo() {
+    saveVideo(video: VideoModel) {
         const url = this.BACKEND_URL + "/user/video/save";
-        const paramss = new HttpParams().append("userName", 'user1').append('videoIds', [2].toString());
-        return this.httpClient.post(url, {}, {
-            params: paramss
+        let bean = this.getAuthBean();
+        // const paramss = new HttpParams().append("authBean", JSON.stringify(bean)).append('videoIds', [video.id].toString());
+        return this.httpClient.post(url, {authBean: bean, videoIds: [video.id]}, {
+            // params: paramss
         });
     }
 }

@@ -1,9 +1,10 @@
 import {Observable} from 'rxjs';
 import {VideoService} from './../video.service';
 import {VideoTagModel} from './../video-tag.model';
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {VideoModel} from './../video.model';
+import {UserVideoService} from "../user.video.service";
 
 @Component({
     selector: 'random-video',
@@ -14,6 +15,8 @@ import {VideoModel} from './../video.model';
 export class RandomVideoComponent implements OnInit {
     @Input() recentVideoClicked: VideoModel;
     @ViewChild("videoplayer") videoplayer;
+    @Output() userVideo: EventEmitter<VideoModel> = new EventEmitter();
+    isUserLogged = false;
 
     randomVideo: VideoModel;
     currentVideoTags: Observable<VideoTagModel[]>;
@@ -21,7 +24,8 @@ export class RandomVideoComponent implements OnInit {
     videoErrorMessage = "";
 
     constructor(private http: HttpClient,
-                private videoService: VideoService) {
+                private videoService: VideoService,
+                private userVideoService: UserVideoService) {
 
         this.videoService.videoOnRecentBarClicked.subscribe(video => {
             this.randomVideo = video;
@@ -66,7 +70,15 @@ export class RandomVideoComponent implements OnInit {
     ngOnInit() {
         this.videoService.videoTagSelectedForRandomVideo.subscribe((data: string[]) => {
             this.selectedVideoTagIds = data;
-        })
+        });
+
+        this.userVideoService.userSessionStatusEvent.subscribe((loggedIn : boolean) => {
+            this.isUserLogged = loggedIn;
+        });
     }
 
+    onUserVideoAdd(video: VideoModel) {
+        this.userVideo.emit(video);
+        this.userVideoService.userVideoAdded.emit(video);
+    }
 }
