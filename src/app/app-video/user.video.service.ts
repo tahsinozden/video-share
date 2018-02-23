@@ -60,4 +60,9 @@ export class UserVideoService {
             // params: paramss
         });
     }
+
+    getUserVideos(userName: string) {
+        const url = this.BACKEND_URL + "/user/video/" + userName;
+        return this.httpClient.get(url);
+    }
 }
