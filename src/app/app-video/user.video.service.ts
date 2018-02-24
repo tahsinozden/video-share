@@ -33,7 +33,7 @@ export class UserVideoService {
     isUserLogged() {
         const url = this.BACKEND_URL + "/user/authenticate";
         let authBean = this.getAuthBean();
-        return this.httpClient.post(url, {authBean: authBean});
+        return this.httpClient.post(url, authBean);
     }
 
     getAuthBean() {

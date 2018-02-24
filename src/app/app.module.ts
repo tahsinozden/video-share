@@ -19,7 +19,8 @@ import {NavBarComponent} from './app-video/nav-bar/nav-bar.component';
 
 const appRoutes: Routes = [
     {path: '', component: AppVideoComponent},
-    // {path: 'about', component: AppAboutComponent}
+    // TODO: implement about component
+    {path: 'about', component: AppVideoComponent}
 ];
 
 @NgModule({
