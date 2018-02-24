@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {VideoService} from './video.service'
 import {VideoModel} from './video.model';
+import {UserVideoService} from "./user.video.service";
 
 @Component({
     selector: 'app-video',
     templateUrl: './app-video.component.html',
     styleUrls: ['./app-video.component.css'],
-    providers: [VideoService]
+    providers: [VideoService, UserVideoService]
 })
 export class AppVideoComponent implements OnInit {
     clickedVideo: VideoModel;

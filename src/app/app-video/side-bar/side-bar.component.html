@@ -1,0 +1,17 @@
+<div class="sidebar-nav">
+  <div class="well" style="width:300px; padding: 8px 0;">
+    <ul class="nav nav-list">
+      <li class="nav-header" style="text-indent: 10px;">User Menu</li>
+      <li><a href="#" (click)="onUserVideoClicked()"><i class="icon-home"></i> My Videos</a>
+        <ul>
+          <li *ngFor="let val of userVideos">{{ val.videoName }}</li>
+        </ul>
+      </li>
+      <li><a href="#"><i class="icon-envelope"></i> Messages <span class="badge badge-info">4</span></a></li>
+      <li><a href="#"><i class="icon-comment"></i> Comments <span class="badge badge-info">10</span></a></li>
+      <li class="divider"></li>
+      <li><a href="#"><i class="icon-comment"></i> Settings</a></li>
+    </ul>
+
+  </div>
+</div>

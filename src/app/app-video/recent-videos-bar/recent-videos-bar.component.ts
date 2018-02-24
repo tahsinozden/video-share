@@ -14,7 +14,7 @@ export class RecentVideosBarComponent implements OnInit {
     recentVideosObjectList: VideoModel[] = [];
 
     constructor(private videoService: VideoService) {
-        // subsribe to the randomly loaded videos
+        // subscribe to the randomly loaded videos
         this.videoService.newVideoAdded.subscribe(videoData => {
             this.recentVideosObjectList.unshift(videoData);
             console.log(videoData.url);

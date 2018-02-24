@@ -12,6 +12,16 @@ import {VideoUploaderComponent} from './app-video/video-uploader/video-uploader.
 import {RandomVideoComponent} from './app-video/random-video/random-video.component';
 import {RecentVideosBarComponent} from './app-video/recent-videos-bar/recent-videos-bar.component';
 import {VideoTagSelectorComponent} from './app-video/random-video/video-tag-selector/video-tag-selector.component';
+import {RouterModule, Routes} from "@angular/router";
+import {SideBarComponent} from './app-video/side-bar/side-bar.component';
+import {VideoMenuHolderComponent} from './app-video/video-menu-holder/video-menu-holder.component';
+import {NavBarComponent} from './app-video/nav-bar/nav-bar.component';
+
+const appRoutes: Routes = [
+    {path: '', component: AppVideoComponent},
+    // TODO: implement about component
+    {path: 'about', component: AppVideoComponent}
+];
 
 @NgModule({
     declarations: [
@@ -20,7 +30,10 @@ import {VideoTagSelectorComponent} from './app-video/random-video/video-tag-sele
         VideoUploaderComponent,
         RandomVideoComponent,
         RecentVideosBarComponent,
-        VideoTagSelectorComponent
+        VideoTagSelectorComponent,
+        SideBarComponent,
+        VideoMenuHolderComponent,
+        NavBarComponent
     ],
     imports: [
         BrowserModule,
@@ -28,7 +41,10 @@ import {VideoTagSelectorComponent} from './app-video/random-video/video-tag-sele
         HttpModule,
         FormsModule,
         // this is for @ng-bootstrap/ng-bootstrap
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        RouterModule.forRoot(
+            appRoutes,
+        )
     ],
     providers: [],
     bootstrap: [AppComponent]

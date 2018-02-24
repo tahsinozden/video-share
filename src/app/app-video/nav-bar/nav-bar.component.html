@@ -1,0 +1,35 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" routerLink="/">Video Share</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/about">About</a></li>
+      </ul>
+      <!--<div *ngIf="( !isUserLogged | async ); else logoutBanner">-->
+      <div *ngIf="!userLogged; else logoutBanner">
+        <div class="navbar-search pull-right">
+          <form class="form-inline">
+            <input type="text" class="form-control" placeholder="Login" name="userName" [(ngModel)]="user.userName">
+            <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="user.password">
+            <button class="btn btn-default" (click)="login(user)">Login</button>
+          </form>
+        </div>
+
+      </div>
+      <ng-template #logoutBanner>
+        <form class="navbar-search pull-right">
+          <button class="btn btn-default" (click)="logout()">Logout</button>
+        </form>
+      </ng-template>
+    </div>
+  </div>
+</nav>
+<!--<router-outlet></router-outlet>-->

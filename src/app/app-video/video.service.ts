@@ -91,4 +91,10 @@ export class VideoService {
                 return response.json();
             })
     }
+
+    getVideoByIds(videoIds: number[]) {
+        const url = this.BACKEND_URL + "/data/video";
+        const paramss = new HttpParams().append("videoIds", videoIds.toString());
+        return this.httpClient.get(url, { params: paramss });
+    }
 }
