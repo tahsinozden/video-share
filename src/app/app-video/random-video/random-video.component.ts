@@ -72,6 +72,12 @@ export class RandomVideoComponent implements OnInit {
             this.selectedVideoTagIds = data;
         });
 
+        // check when the component loaded
+        this.userVideoService.isUserLogged().subscribe((loggedIn: boolean) => {
+            this.isUserLogged = loggedIn;
+        });
+
+        // check when there is a login event
         this.userVideoService.userSessionStatusEvent.subscribe((loggedIn : boolean) => {
             this.isUserLogged = loggedIn;
         });
