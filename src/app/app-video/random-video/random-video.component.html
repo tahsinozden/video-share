@@ -18,7 +18,7 @@
         <span>Video Tags: </span>
         <span class="badge" *ngFor="let tag of (currentVideoTags | async)">{{ tag.tagName }}</span>
       </div>
-      <button *ngIf="(isUserLogged)" class="btn primary" (click)="onUserVideoAdd(randomVideo)">add to my list</button>
+      <button class="btn btn-primary" *ngIf="(isUserLogged)" (click)="onUserVideoAdd(randomVideo)">add to my list</button>
       <hr>
       <div class="panel panel-info">
         <div class="panel-heading">
